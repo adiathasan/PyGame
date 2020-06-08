@@ -21,40 +21,47 @@ bg = pygame.image.load('bg.jpg')
 timeFrame = pygame.time.Clock()
 
 char = pygame.image.load('standing.png')
-
-
-# class Player
-
-x = 0
-y = 400
-width = 64
-height = 64
-vel = 10
-jump_count = 10
-jump = False
 run = True
-left = False
-right = False
-doz = False
-walk_count = 0
-a = 0
 
 
-def charDraw():
-    global walk_count, height, do
+class Player:
+    def __init__(self, name, x, y, width, height, health):
+        self.height = health
+        self.height = height
+        self.y = y
+        self.x = x
+        self.width = width
+        self.name = name
+        self.vel = 10
+        self.jump = False
+        self.jump_count = 10
+        self.left = False
+        self.right = False
+        self.doz = False
+        self.walk_count = 0
+
+    def charDraw(self):
+
+        if self.walk_count + 1 >= 9:
+            self.walk_count = 0
+        if self.right:
+            window.blit(walkRight[self.walk_count], (self.x, self.y))
+            self.walk_count += 1
+        elif self.left:
+            window.blit(walkLeft[self.walk_count], (self.x, self.y))
+            self.walk_count += 1
+        else:
+            window.blit(char, (self.x, self.y))
+
+        pygame.display.update()
+
+
+def gameWindow():
     window.blit(bg, (0, 0))
-    if walk_count + 1 >= 9:
-        walk_count = 0
-    if right:
-        window.blit(walkRight[walk_count], (x, y))
-        walk_count += 1
-    elif left:
-        window.blit(walkLeft[walk_count], (x, y))
-        walk_count += 1
-    else:
-        window.blit(char, (x, y))
-
     pygame.display.update()
+
+
+ratul = Player('Adiat', 0, 410, 64, 64, 100)
 
 
 while run:
@@ -65,31 +72,30 @@ while run:
             run = False
 
     keys = pygame.key.get_pressed()
-    if not jump:
+    if not ratul.jump:
         if keys[pygame.K_SPACE]:
-            jump = True
+            ratul.jump = True
     else:
-        if jump_count >= -10:
-            y -= (jump_count * abs(jump_count)) * .5
-            jump_count -= 2
-            print(y)
+        if ratul.jump_count >= -10:
+            ratul.y -= (ratul.jump_count * abs(ratul.jump_count)) * .5
+            ratul.jump_count -= 2
         else:
-            jump = False
-            jump_count = 10
-    if keys[pygame.K_LEFT] and x > 0:
-        left = True
-        right = False
-        x -= vel
-    elif keys[pygame.K_RIGHT] and x < 600 - width:
-        left = False
-        right = True
-        x += vel
+            ratul.jump = False
+            ratul.jump_count = 10
+    if keys[pygame.K_LEFT] and ratul.x > 0:
+        ratul.left = True
+        ratul.right = False
+        ratul.x -= ratul.vel
+    elif keys[pygame.K_RIGHT] and ratul.x < 600 - ratul.width:
+        ratul.left = False
+        ratul.right = True
+        ratul.x += ratul.vel
     elif keys[pygame.K_DOWN]:
         doz = True
     else:
-        left = False
-        right = False
-
-    charDraw()
+        ratul.left = False
+        ratul.right = False
+    gameWindow()
+    Player.charDraw(ratul)
 
 pygame.quit()
