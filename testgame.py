@@ -2,9 +2,10 @@ import pygame
 
 pygame.init()
 
-pygame.display.set_caption('PUBG')
+pygame.display.set_caption('JUMPING')
 
 window = pygame.display.set_mode((600, 470))
+
 walkRight = [pygame.image.load('R1.png'), pygame.image.load('R2.png'),
              pygame.image.load('R3.png'), pygame.image.load('R4.png'),
              pygame.image.load('R5.png'), pygame.image.load('R6.png'),
@@ -16,6 +17,7 @@ walkLeft = [pygame.image.load('L1.png'), pygame.image.load('L2.png'),
             pygame.image.load('L5.png'), pygame.image.load('L6.png'),
             pygame.image.load('L7.png'), pygame.image.load('L8.png'),
             pygame.image.load('L9.png')]
+
 bg = pygame.image.load('bg.jpg')
 
 timeFrame = pygame.time.Clock()
